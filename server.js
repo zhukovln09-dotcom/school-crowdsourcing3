@@ -45,6 +45,46 @@ app.get('/api/health', async (req, res) => {
     }
 });
 
+// Добавляем авторизацию
+const simpleAuth = require('./simple-auth.js');
+
+// Middleware для проверки авторизации
+const authMiddleware = async (req, res, next) => {
+    const token = req.headers.authorization?.replace('Bearer ', '') || req.query.token;
+    
+    if (token) {
+        const authResult = await simpleAuth.authenticate(token);
+        if (authResult.authenticated) {
+            req.user = authResult.user;
+            req.token = token;
+        } else {
+            req.user = null;
+        }
+    } else {
+        req.user = null;
+    }
+    
+    next();
+};
+
+// Middleware для защиты маршрутов
+const requireAuth = (roles = []) => {
+    return (req, res, next) => {
+        if (!req.user) {
+            return res.status(401).json({ error: 'Требуется авторизация' });
+        }
+        
+        if (roles.length > 0 && !roles.includes(req.user.role)) {
+            return res.status(403).json({ error: 'Недостаточно прав' });
+        }
+        
+        next();
+    };
+};
+
+// Подключаем middleware ко всем маршрутам
+app.use(authMiddleware);
+
 // Получить статистику
 app.get('/api/stats', async (req, res) => {
     try {
@@ -232,3 +272,4 @@ app.listen(PORT, () => {
     console.log(`🌐 Сайт: http://localhost:${PORT}`);
     console.log(`📊 MongoDB: ${process.env.MONGODB_URI ? 'Настроен' : 'Используется локальная строка'}`);
 });
+
