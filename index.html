@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вместе</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fab fa-jedi-order"></i>Вместе</h1>
+            <p class="subtitle">Предлагайте идеи, голосуйте и улучшайте нашу школу вместе!</p>
+        </header>
+
+        <main>
+            <!-- Форма для добавления идеи -->
+            <section class="idea-form">
+                <h2><i class="fas fa-plus-circle"></i> Предложить новую идею</h2>
+                <form id="ideaForm">
+                    <input type="text" id="author" placeholder="Ваше имя" required>
+                    <input type="text" id="title" placeholder="Название идеи" required>
+                    <textarea id="description" placeholder="Опишите вашу идею подробнее..." rows="4" required></textarea>
+                    <button type="submit" class="btn">
+                        <i class="fas fa-paper-plane"></i> Опубликовать идею
+                    </button>
+                </form>
+            </section>
+
+            <!-- Список идей -->
+            <section class="ideas-list">
+                <h2><i class="fas fa-list"></i> Все идеи</h2>
+                <div id="ideasContainer">
+                    <div class="loading">
+                        <i class="fas fa-spinner fa-spin"></i> Загрузка идей...
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>Для учеников, учителей и родителей.</p>
+        </footer>
+    </div>
+
+    <!-- Модальное окно для комментариев -->
+    <div id="commentModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3 id="modalTitle">Комментарии</h3>
+            <div class="comments-section">
+                <div id="commentsContainer"></div>
+                <form id="commentForm">
+                    <input type="text" id="commentAuthor" placeholder="Ваше имя" required>
+                    <textarea id="commentText" placeholder="Ваш комментарий..." rows="3" required></textarea>
+                    <button type="submit" class="btn">
+                        <i class="fas fa-comment"></i> Добавить комментарий
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
+
+

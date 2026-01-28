@@ -1,0 +1,14 @@
+# render.yaml
+services:
+  - type: web
+    name: school-crowdsourcing-mongo
+    env: node
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: MONGODB_URI
+        sync: false  # Нужно будет вписать вручную в панели Render
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3000
